@@ -1,7 +1,6 @@
 // MaszynaStosowa.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include <iostream>
 
 using namespace std;
@@ -46,23 +45,26 @@ void lista::show()
 	if (tmp)
 	{
 		do {
-			cout << tmp->dana;
+			cout << tmp->dana << " ";
 			tmp = tmp->next;
 		} while (tmp != nullptr);
+		cout << endl;
+	}
+	else {
 		cout << endl;
 	}
 }
 
 void lista::swap() {
 	element *tmpf, *tmps;
-	
+
 	tmpf = this->glowa;
 	tmps = this->glowa->next;
-	
+
 	tmpf->next = tmps->next;
 	tmps->next = tmpf;
 	this->glowa = tmps;
-	
+
 }
 
 void lista::pop()
@@ -86,24 +88,39 @@ void lista::sum()
 
 int main()
 {
-
-	cout << "Hello wordl!";
 	lista * _lista = new lista;
-	_lista->push(1);
-	_lista->push(2);
-	_lista->push(3);
-	_lista->push(4);
-	_lista->push(5);
-	_lista->push(6);
-	_lista->show();
-	_lista->swap();
-	_lista->show();
-	_lista->pop();
-	_lista->show();
-	_lista->pop();
-	_lista->show();
-	_lista->sum();
-	_lista->show();
+	
+	char key;
+	while (true)
+	{
+
+		cin >> key;
+		if (isdigit(key))
+		{
+			int liczba = int(key) - 48;
+			_lista->push(liczba);
+		}
+		switch (key)
+		{
+		case '+':
+			_lista->sum();
+			break;
+		case 's':
+			_lista->swap();
+			break;
+		case 'p':
+			_lista->show();
+			break;
+		case 'x':
+			_lista->pop();
+			break;
+		case 'q':
+			exit(0);
+		default:
+			break;
+		}
+	}
+
 	return 0;
 }
 
