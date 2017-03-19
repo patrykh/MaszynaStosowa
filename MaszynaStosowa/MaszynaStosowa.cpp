@@ -23,6 +23,7 @@ struct lista
 	void swap();
 	void pop();
 	void sum();
+	void replace();
 
 	lista();
 };
@@ -86,26 +87,69 @@ void lista::sum()
 	push(sum);
 }
 
+void lista::replace()
+{
+	int n = 0;
+	element * tmpf, *tmps, *head;
+	
+	n = this->glowa->dana;
+	pop();
+	
+	
+	if ( n>1 )
+	{
+		tmpf = this->glowa;
+		tmps = this->glowa->next;
+
+		for (int i = 1; i < n; i++)
+		{
+			tmpf = tmpf->next;
+		}
+
+		/*head->next = tmpf->next;
+		tmpf->next = head;
+		this->glowa = tmps;*/
+
+		this->glowa->next = tmpf->next;
+		tmpf->next = this->glowa;
+		this->glowa = tmps;
+
+		/*tmps->next = this->glowa;
+		tmpf->next = this->glowa->next;
+		this->glowa = tmpf;*/
+	}
+	
+
+}
+
 int main()
 {
 	lista * _lista = new lista;
-	
+	int liczba=0;
 	char key;
+	char r;
 	while (true)
 	{
+		scanf("%c", &key);
 
-		cin >> key;
-		if (isdigit(key))
-		{
-			int liczba = int(key) - 48;
+		if (key && isdigit(key)) {
+			
+			while (key && isdigit(key)) {
+				liczba = (liczba * 10) + (key - '0');
+				scanf("%c", &key);
+			}
+
 			_lista->push(liczba);
+			liczba = 0;
 		}
+
 		switch (key)
 		{
 		case '+':
 			_lista->sum();
 			break;
 		case 's':
+			//TODO poprawiæ sumê gdy jedna liczba dodac funkcje sprawdzajaca ilosc elementow w liscie.
 			_lista->swap();
 			break;
 		case 'p':
@@ -113,6 +157,9 @@ int main()
 			break;
 		case 'x':
 			_lista->pop();
+			break;
+		case 'r':
+			_lista->replace();
 			break;
 		case 'q':
 			exit(0);
